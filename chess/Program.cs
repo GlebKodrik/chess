@@ -4,10 +4,11 @@ namespace chess
 {
     class Program
     {
-        public static char[,] mass = new char[4,4];
         const char one = 'x';
         const char spaces = ' ';
         const char zero = 'o';
+        const int size = 4;
+        public static char[,] mass = new char[size,size];
 
         static void Main(string[] args)
         {
@@ -19,7 +20,7 @@ namespace chess
             bool p=true;
             while (p)
             {
-                Console.WriteLine("За кого играете (1 крестики , 2 нолики): ");
+                Console.Write("За кого играете (1 крестики , 2 нолики): ");
                 int.TryParse(Console.ReadLine(), out var qw);
                 if (qw == 1) { p = false;massiv(); input_x(); }
                 else if (qw == 2) { p = false; massiv(); input_y(); }
