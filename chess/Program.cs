@@ -12,6 +12,7 @@ namespace chess
 
         static void Main(string[] args)
         {
+            IChess text = new Line();
             space();
             choice_game();
         }
@@ -20,7 +21,7 @@ namespace chess
             bool p=true;
             while (p)
             {
-                Console.Write("За кого играете (1 крестики , 2 нолики): ");
+                Console.WriteLine("За кого играете (1 крестики , 2 нолики): ");
                 int.TryParse(Console.ReadLine(), out var qw);
                 if (qw == 1) { p = false;massiv(); input_x(); }
                 else if (qw == 2) { p = false; massiv(); input_y(); }
@@ -71,17 +72,11 @@ namespace chess
             {
                 mass[x1, x2] = c;
             }
-            else if (mass[x1, x2] == zero)
+            else if (c == zero || c == one)
             {
                 Console.WriteLine("Вы накрываете другого игрока перевведите число!");
                 massiv();
-                input_x();
-            }
-            else if (mass[x1, x2] == one)
-            {
-                Console.WriteLine("Вы накрываете другого игрока перевведите число!");
-                massiv();
-                input_y();
+                if (c == zero) input_y(); else input_x();
             }
             check(move);
             massiv();
@@ -98,7 +93,7 @@ namespace chess
                 mass[1, 3] == move && mass[2, 3] == move && mass[3, 3] == move ||
 
                 mass[1, 1] == move && mass[2, 2] == move && mass[3, 3] == move ||
-                mass[3, 3] == move && mass[2, 2] == move && mass[1, 3] == move) end(move); 
+                mass[1, 3] == move && mass[2, 2] == move && mass[3, 1] == move ) end(move); 
             Console.Clear();
         }
         static void end(int win)
