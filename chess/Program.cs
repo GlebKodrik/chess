@@ -61,6 +61,7 @@ namespace chess
 
         static void choos(int x1,char c,int x2)
         {
+            var move = c;
             if (x1 > 3 || x2 > 3 || x1 <= 0 || x2 <= 0)
             {
                 if (c == zero) input_y();
@@ -82,40 +83,33 @@ namespace chess
                 massiv();
                 input_y();
             }
-            check();
+            check(move);
             massiv();
         }
 
-        static void check()
+        static void check(char move)
         {
-            var win = 0; 
-            if (mass[1, 1] == zero && mass[1, 2] == zero && mass[1, 3] == zero ||
-                mass[2, 1] == zero && mass[2, 2] == zero && mass[2, 3] == zero ||
-                mass[3, 1] == zero && mass[3, 2] == zero && mass[3, 3] == zero ||
+            if (mass[1, 1] == move && mass[1, 2] == move && mass[1, 3] == move ||
+                mass[2, 1] == move && mass[2, 2] == move && mass[2, 3] == move ||
+                mass[3, 1] == move && mass[3, 2] == move && mass[3, 3] == move ||
 
-                mass[1, 1] == zero && mass[2, 1] == zero && mass[3, 1] == zero ||
-                mass[1, 2] == zero && mass[2, 2] == zero && mass[3, 2] == zero ||
-                mass[1, 3] == zero && mass[2, 3] == zero && mass[3, 3] == zero ||
+                mass[1, 1] == move && mass[2, 1] == move && mass[3, 1] == move ||
+                mass[1, 2] == move && mass[2, 2] == move && mass[3, 2] == move ||
+                mass[1, 3] == move && mass[2, 3] == move && mass[3, 3] == move ||
 
-                mass[1, 1] == zero && mass[2, 2] == zero && mass[3, 3] == zero ||
-                mass[3, 3] == zero && mass[2, 2] == zero && mass[1, 3] == zero) { win += 1; end(win); }
-            else if (mass[1, 1] == one && mass[1, 2] == one && mass[1, 3] == one ||
-                mass[2, 1] == one && mass[2, 2] == one && mass[2, 3] == one ||
-                mass[3, 1] == one && mass[3, 2] == one && mass[3, 3] == one ||
-
-                mass[1, 1] == one && mass[2, 1] == one && mass[3, 1] == one ||
-                mass[1, 2] == one && mass[2, 2] == one && mass[3, 2] == one ||
-                mass[1, 3] == one && mass[2, 3] == one && mass[3, 3] == one ||
-
-                mass[1, 1] == one && mass[2, 2] == one && mass[3, 3] == one ||
-                mass[1, 3] == one && mass[2, 2] == one && mass[3, 1] == one) { win += 2; end(win); }
+                mass[1, 1] == move && mass[2, 2] == move && mass[3, 3] == move ||
+                mass[3, 3] == move && mass[2, 2] == move && mass[1, 3] == move) end(move); 
             Console.Clear();
         }
         static void end(int win)
         {
             Console.Clear();
-            if (win == 1) Console.WriteLine("Победа ноликов!"); else if (win==2) Console.WriteLine("Победа крестиков!");
-            m:
+            if (win == zero) Console.WriteLine("Победа ноликов!"); else if (win==one) Console.WriteLine("Победа крестиков!");
+            restart();
+        }
+
+        static void restart()
+        {
             Console.WriteLine("Повторить игру?(Да,Нет): ");
             var q = Console.ReadLine();
 
@@ -125,9 +119,9 @@ namespace chess
                 choice_game();
             }
             else if (q == "Нет" || q == "нет") Environment.Exit(0);
-            else goto m;
-
+            else restart();
         }
+
         static void massiv()
         {
             for (int i = 1; i < mass.GetLength(0); i++)
